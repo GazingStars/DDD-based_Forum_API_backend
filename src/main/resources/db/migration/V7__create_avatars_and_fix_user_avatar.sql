@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS avatars (
+    id VARCHAR(36) PRIMARY KEY,
+    file_name VARCHAR(255) NOT NULL,
+    url TEXT NOT NULL,
+    uploaded_at TIMESTAMP NOT NULL
+);
+

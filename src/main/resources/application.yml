@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/forum
+    username: postgres
+    password: 3327
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    clean-disabled: false
+jwt:
+  secret: "my-very-strong-secret-key-at-least-32-chars"
+  expiration: 86400000   # 24 часа
