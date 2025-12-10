@@ -1,6 +1,7 @@
 package com.example.forum.web.DTOs.user;
 
 import com.example.forum.domain.model.user.User;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.Instant;
 
@@ -10,7 +11,9 @@ public record UserResponse(
         String username,
         String role,
         String avatarId,
+        @JsonFormat(shape = JsonFormat.Shape.STRING)
         Instant createdAt,
+        @JsonFormat(shape = JsonFormat.Shape.STRING)
         Instant updatedAt
 ) {
     public static UserResponse from(User user) {

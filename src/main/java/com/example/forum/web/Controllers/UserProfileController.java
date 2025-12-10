@@ -1,6 +1,8 @@
 package com.example.forum.web.Controllers;
 
+import com.example.forum.application.DTOs.avatar.AvatarResponse;
 import com.example.forum.application.services.AuthService;
+import com.example.forum.application.services.AvatarService;
 import com.example.forum.application.services.UserService;
 import com.example.forum.domain.model.user.User;
 import com.example.forum.domain.model.user.UserId;
@@ -17,10 +19,12 @@ public class UserProfileController {
 
     private final UserRepository userRepository;
     private final UserService service;
+    private final AvatarService avatarService;
 
-    public UserProfileController(AuthService authService, UserRepository userRepository, UserService service) {
+    public UserProfileController(AuthService authService, UserRepository userRepository, UserService service, AvatarService avatarService) {
         this.userRepository = userRepository;
         this.service = service;
+        this.avatarService = avatarService;
     }
 
     @GetMapping("/api/user/me")
@@ -48,4 +52,10 @@ public class UserProfileController {
         return UserResponse.from(changedUser);
     }
 
+    @GetMapping("/api/user/{id}/avatar")
+    public AvatarResponse getUserAvatar(@PathVariable String id) {
+        return avatarService.getForUser(new UserId(id))
+                .map(AvatarResponse::from)
+                .orElse(null);
+    }
 }

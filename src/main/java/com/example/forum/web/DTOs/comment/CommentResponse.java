@@ -1,6 +1,7 @@
 package com.example.forum.web.DTOs.comment;
 
 import com.example.forum.domain.model.comment.Comment;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.Instant;
 
@@ -9,7 +10,9 @@ public record CommentResponse(
         String postId,
         String authorId,
         String content,
+        @JsonFormat(shape = JsonFormat.Shape.STRING)
         Instant createdAt,
+        @JsonFormat(shape = JsonFormat.Shape.STRING)
         Instant updatedAt,
         long likeCount,
         boolean likedByMe

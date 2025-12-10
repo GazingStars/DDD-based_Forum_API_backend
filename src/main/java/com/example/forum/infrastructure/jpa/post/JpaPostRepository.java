@@ -3,6 +3,7 @@ package com.example.forum.infrastructure.jpa.post;
 import com.example.forum.domain.model.category.CategoryId;
 import com.example.forum.domain.model.post.Post;
 import com.example.forum.domain.model.post.PostId;
+import com.example.forum.domain.model.user.UserId;
 import com.example.forum.domain.repository.PostRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -36,6 +37,14 @@ public class JpaPostRepository implements PostRepository {
     public List<Post> findAllPaged(int page, int size) {
         return repository
                 .findAll(PageRequest.of(page, size))
+                .map(PostMapper::toDomain)
+                .toList();
+    }
+
+    @Override
+    public List<Post> findByUser(UserId userId) {
+        return repository.findByAuthorId(userId.get())
+                .stream()
                 .map(PostMapper::toDomain)
                 .toList();
     }

@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AvatarService {
@@ -56,6 +58,18 @@ public class AvatarService {
         userRepository.save(user);
 
         return avatar;
+    }
+
+    @Transactional
+    public Optional<Avatar> getForUser(UserId userId) {
+
+        var user = userRepository.findById(userId).orElseThrow();
+
+        if (user.getAvatarId() == null) {
+            return Optional.empty();
+        }
+
+        return avatarRepository.findById(user.getAvatarId());
     }
 
     @Transactional

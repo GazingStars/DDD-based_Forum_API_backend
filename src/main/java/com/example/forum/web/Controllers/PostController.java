@@ -72,6 +72,29 @@ public class PostController {
         return PostResponse.from(post, likes, likedByMe);
     }
 
+    @GetMapping("/user/{userId}")
+    public List<PostResponse> getByUser(
+            @AuthenticationPrincipal AuthUserPrincipal principal,
+            @PathVariable String userId
+    ) {
+        var posts = service.getByUser(new UserId(userId));
+
+        return posts.stream()
+                .map(post -> {
+                    long likes = likeService.countPostLikes(post.getId());
+
+                    boolean likedByMe = false;
+                    if (principal != null) {
+                        likedByMe = likeService.hasUserLikedPost(
+                                new UserId(principal.getUserId()),
+                                post.getId()
+                        );
+                    }
+
+                    return PostResponse.from(post, likes, likedByMe);
+                })
+                .toList();
+    }
 
     @PostMapping
     public PostResponse create(

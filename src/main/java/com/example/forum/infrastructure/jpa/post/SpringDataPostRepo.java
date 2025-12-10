@@ -17,4 +17,5 @@ public interface SpringDataPostRepo extends JpaRepository<PostEntity, String> {
         ORDER BY p.createdAt DESC
     """)
     List<PostEntity> search(@Param("q") String q, Pageable pageable);
+    List<PostEntity> findByAuthorId(String authorId);
 }

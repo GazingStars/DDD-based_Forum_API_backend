@@ -125,6 +125,11 @@ public class PostService {
     }
 
     @Transactional
+    public List<Post> getByUser(UserId userId) {
+        return repository.findByUser(userId);
+    }
+
+    @Transactional
     public void deletePost(PostId id, UserId executor, Role role) {
 
         Post post = getPost(id);

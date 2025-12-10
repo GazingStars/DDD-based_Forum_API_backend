@@ -1,6 +1,7 @@
 package com.example.forum.application.DTOs.post;
 
 import com.example.forum.domain.model.post.Post;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.Instant;
 
@@ -9,7 +10,9 @@ public record PostResponse(
         String authorId,
         String title,
         String content,
+        @JsonFormat(shape = JsonFormat.Shape.STRING)
         Instant createdAt,
+        @JsonFormat(shape = JsonFormat.Shape.STRING)
         Instant editedAt,
         String categoryId,
         long likes,
